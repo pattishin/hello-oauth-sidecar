@@ -1,0 +1,20 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  annotations:
+    run.googleapis.com/launch-stage: BETA
+  name: hello-spa-oauth-sandbox
+spec:
+  template:
+    metadata:
+      annotations:
+        run.googleapis.com/execution-environment: gen2
+        run.googleapis.com/container-dependencies: "{client-app:[oauth-server]}"
+    spec:
+      containers:
+        - image: us-central1-docker.pkg.dev/regal-tf-cloud-run/hello-login-repo/client-app:latest
+          name: client-app
+          ports:
+            - containerPort: 8000
+        - image: us-central1-docker.pkg.dev/regal-tf-cloud-run/hello-login-repo/oauth-server:latest
+          name: oauth-server
