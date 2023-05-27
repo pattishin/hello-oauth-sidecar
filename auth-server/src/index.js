@@ -97,21 +97,9 @@ app.get(`${redirectURI}`, async (req, res) => {
     maxAge: 900000,
     httpOnly: true,
     secure: false,
-  });*/
+  });
 
   res.send("Cookie Set");
-
-  /*return axios({
-    method: 'get',
-    url: 'http://localhost:8000/',
-    responseType: 'stream'
-  })
-  .catch(err => {
-    res.send('Error: Not reachable at the moment on localhost.');
-  })
-  .then(function (response) {
-    response.data.pipe(res);
-  });*/
 });
 
 /**

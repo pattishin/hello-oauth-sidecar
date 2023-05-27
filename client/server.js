@@ -18,8 +18,6 @@ app.get('/logout', (req, res) => {
 });
 
 app.get('/callback', (req, res) => {
-  res.cookie('test', 'one');
-  console.log('---- starting callback');
   const query = req.url.substr(req.url.indexOf('?') + 1);
 
   axios({
