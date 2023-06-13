@@ -1,4 +1,4 @@
-FROM --platform=linux/amd64 node:18.16.0 as auth-api-build
+FROM --platform=linux/amd64 node:18.16.0 as oauth-sidecar
 
 WORKDIR server/
 

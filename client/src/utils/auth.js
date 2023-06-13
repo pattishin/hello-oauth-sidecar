@@ -20,20 +20,12 @@ import { getConfig } from './config.js';
  * For more information, see https://developers.google.com/identity/protocols/oauth2/web-server
  */ 
 export const login = async () => {
-    /*try {
-        console.log('------ foo');
-        const foores = await fetch(`/foo`);
-        const b = await foores.json();
-    } catch(e) {
-        console.log(e);
-    }*/
-
-    //const { REDIRECT_URI, AUTH_CLIENT_ID } = getConfig();
+    const { REDIRECT_URI, AUTH_CLIENT_ID } = getConfig();
 
     const rootUrl = 'https://accounts.google.com/o/oauth2/v2/auth';
     const options = new URLSearchParams({
-        redirect_uri: 'https://hello-spa-oauth-sandbox-3cbd2kmgtq-uc.a.run.app/callback', //REDIRECT_URI
-        client_id: '821070197892-3s4m3nbfg4d5bmu30anpnbe3muo0ure5.apps.googleusercontent.com', //AUTH_CLIENT_ID
+        redirect_uri: REDIRECT_URI,
+        client_id: AUTH_CLIENT_ID,
         access_type: 'offline',
         response_type: 'code',
         prompt: 'consent',
@@ -47,28 +39,9 @@ export const login = async () => {
 };
 
 /**
- * /hasCookie - checks if user is logged in
- */ 
-export const hasCookie = async () => {
-    const { AUTH_API_URL } = getConfig();
-    let retrievedCookie = false;
-
-    try {
-        retrievedCookie = await fetch(`/hasCookie`);
-    } catch(e) {
-        throw new Error(e);
-    }
-
-    return retrievedCookie;
-};
-
-/**
- * /logout - deletes the user login session and revokes refresh token
- * For more information, see https://developers.google.com/identity/protocols/oauth2/web-server
+ * /logout - stub logout
  */ 
 export const logout = async () => {
-    const { AUTH_API_URL } = getConfig();
-
     try {
         await fetch(`/logout`);
     } catch(e) {
@@ -76,4 +49,4 @@ export const logout = async () => {
     }
 };
 
-export default { login, logout, hasCookie };
+export default { login, logout };

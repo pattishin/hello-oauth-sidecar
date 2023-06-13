@@ -10,6 +10,7 @@ function App() {
 
   return (
     <div className="App">
+      <b>Please note that this is experimental.</b>
       <button
         className="login"
         onClick={onLoginClick}

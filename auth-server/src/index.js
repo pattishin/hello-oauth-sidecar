@@ -71,9 +71,9 @@ app.get(`${redirectURI}`, async (req, res) => {
 
   const { id_token, access_token } = await getTokens({
     code,
-    clientId: '821070197892-3s4m3nbfg4d5bmu30anpnbe3muo0ure5.apps.googleusercontent.com', //CLIENT_ID
-    clientSecret: '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', //CLIENT_SECRET,
-    redirectUri: `https://hello-spa-oauth-sandbox-3cbd2kmgtq-uc.a.run.app/callback`,
+    clientId: CLIENT_ID,
+    clientSecret: CLIENT_SECRET,
+    redirectUri: REDIRECT_URI,
   });
 
   const userURL = `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${access_token}`;
@@ -91,9 +91,10 @@ app.get(`${redirectURI}`, async (req, res) => {
       throw new Error(err.message);
     });
 
-  const token = jwt.sign(user, 'foobar'); //JWT_SECRET
+  // TODO: Flip to JWT_SECRET env var from 'foobar' 
+  const token = jwt.sign(user, 'foobar');
 
-  res.cookie('authtoken', token, { //COOKIE_NAME
+  res.cookie(COOKIE_NAME, token, {
     maxAge: 900000,
     httpOnly: true,
     secure: false,
@@ -101,53 +102,6 @@ app.get(`${redirectURI}`, async (req, res) => {
 
   res.send("Cookie Set");
 });
-
-/**
- * Retrieve logged in user profile
- */
-app.get('/getUser', (req, res) => {
-  let user;
-
-  try {
-    const cookie = req.cookies[COOKIE_NAME];
-    user = jwt.verify(cookie, JWT_SECRET);
-  } catch (err) {
-    throw new Error(err);
-  }
-
-  return res.send(user);
-});
-
-/**
- * Check for auth cookie
- */
-app.get('/hasCookie', (req, res) => {
-  let cookie;
-
-  try {
-    cookie = req.cookies[COOKIE_NAME];
-  } catch (err) {
-    throw new Error(err);
-  }
-
-  return res.send(!!cookie);
-});
-
-/*app.get('/foobar', async (req, res) => {
-  console.log('------ foobar');
-  
-  axios({
-    method: 'get',
-    url: 'http://localhost:3000/hello',
-    responseType: 'stream'
-  })
-  .catch(err => {
-    res.send('Not reachable at the moment on localhost.');
-  })
-  .then(function (response) {
-    response.data.pipe(res);
-  });
-});*/
 
 /**
  * Handle auth logout

@@ -19,7 +19,8 @@ app.get('/logout', (req, res) => {
 
 app.get('/callback', (req, res) => {
   const query = req.url.substr(req.url.indexOf('?') + 1);
-
+  // Note: important to note for communication with sidecar
+  // Reponse must be `stream` form.
   axios({
     method: 'get',
     url: `http://localhost:3000/auth/google?${query}`,
@@ -29,6 +30,7 @@ app.get('/callback', (req, res) => {
     res.send('Error: Not reachable at the moment on localhost. Possible error occurred in auth server.');
   })
   .then(function (response) {
+    // Piping response over to our sidecar.
     response?.data.pipe(res);
   });
 });
@@ -38,5 +40,5 @@ app.get('/', function (req, res) {
 });
 
 app.listen(port, () => {
-   console.log(`Backend server listening http://localhost:${port}`);
+   console.log(`Proxy server listening http://localhost:${port}`);
 });
