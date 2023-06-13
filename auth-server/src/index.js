@@ -15,9 +15,11 @@ import {
   SITE_URL,
 } from './config.js';
 
+const app = express();
+
+// Running on port 3000
 const port = 3000;
 const redirectURI = '/auth/google';
-const app = express();
 
 function getTokens({ code, clientId, clientSecret, redirectUri }) {
   const url = 'https://oauth2.googleapis.com/token';

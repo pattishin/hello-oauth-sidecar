@@ -18,3 +18,30 @@ spec:
             - containerPort: 8000
         - image: us-central1-docker.pkg.dev/regal-tf-cloud-run/hello-login-repo/oauth-server:latest
           name: oauth-server
+          env:
+          - name: SITE_URL
+            value: <your-cloud-run-url>
+          - name: REDIRECT_URI
+            value: <your-cloud-run-url>/callback
+          - name: JWT_SECRET
+            value: foobar
+          volumeMounts:
+            - name: CLIENT_ID
+            readOnly: true
+            mountPath: /etc/secrets/client/
+            - name: CLIENT_SECRET
+            readOnly: true
+            mountPath: /etc/secrets/client/
+        volumes:
+        - name: CLIENT_ID
+          secret:
+            secretName: client_id_secret
+            items:
+            - key: latest
+              path: /etc/secrets/client/clientid
+        - name: CLIENT_SECRET
+          secret:
+            secretName: client_secret_secret
+            items:
+            - key: latest
+              path: /etc/secrets/client/clientsecret

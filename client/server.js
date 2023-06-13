@@ -6,6 +6,7 @@ const axios = require('axios');
 
 const app = express();
 
+// Running on port 8000
 const port = 8000;
 
 // Enable CORS
