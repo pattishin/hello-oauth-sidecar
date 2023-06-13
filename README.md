@@ -1,4 +1,4 @@
-# Hello Login OAuth Cloud Run Side-car
+# [WIP] Hello Login OAuth Cloud Run Side-car
 
 ```bash
 export PROJECT_ID=<your-project-id>
@@ -27,4 +27,7 @@ gcloud builds submit \
 
 # Run service with new oauth side-car
 gcloud run services replace service.yaml
+
+
+This service will need to be deployed twice in order to capture REDIRECT_URI and SITE_URL from Cloud Run multi-container service.
 ```

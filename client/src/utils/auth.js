@@ -13,19 +13,17 @@
 // limitations under the License.
 
 import axios from 'axios';
-import { getConfig } from './config.js';
+import { REDIRECT_URI, CLIENT_ID } from './config.js';
 
 /**
  * /login - directs user to Google sign-in page
  * For more information, see https://developers.google.com/identity/protocols/oauth2/web-server
  */ 
 export const login = async () => {
-    const { REDIRECT_URI, AUTH_CLIENT_ID } = getConfig();
-
     const rootUrl = 'https://accounts.google.com/o/oauth2/v2/auth';
     const options = new URLSearchParams({
         redirect_uri: REDIRECT_URI,
-        client_id: AUTH_CLIENT_ID,
+        client_id: CLIENT_ID,
         access_type: 'offline',
         response_type: 'code',
         prompt: 'consent',

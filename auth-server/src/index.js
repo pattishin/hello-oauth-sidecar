@@ -71,6 +71,7 @@ app.use(cookieParser());
 app.get(`${redirectURI}`, async (req, res) => {
   const code = req.query.code;
 
+  // TODO: Ensure env vars are coming in as expected
   const { id_token, access_token } = await getTokens({
     code,
     clientId: CLIENT_ID,
